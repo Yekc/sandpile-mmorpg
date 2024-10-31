@@ -1,5 +1,9 @@
 let items = require("../game_data/items.json")
 
+item = function(id) {
+    return items.find(i => i.id === id)
+}
+
 give = async function(player, item, quantity) {
     try {
         const current = player.data.inventory[item] || 0
@@ -53,8 +57,4 @@ sortQuantity = function(player, ascending = true) {
 
     player.data.inventory = sortedInventory
     console.log(`[INVENTORY -> SORT QUANTITY] Inventory sorted ${ascending ? 'ascending' : 'descending'} for ${player.username} (${player.userId})`)
-}
-
-item = function(id) {
-    return items.find(i => i.id === id)
 }
