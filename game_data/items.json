@@ -1,0 +1,14 @@
+[
+    {
+        "id": "ITEM1",
+        "display": {
+            "name": "Item1"
+        }
+    },
+    {
+        "id": "ITEM2",
+        "display": {
+            "name": "Item2"
+        }
+    }
+]

@@ -1,0 +1,18 @@
+{
+  "name": "node-hill-template",
+  "version": "1.0.0",
+  "description": "A sample template for hosting node-hill servers.",
+  "main": "start.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "You",
+  "license": "ISC",
+  "dependencies": {
+    "google-spreadsheet": "^4.1.4",
+    "googleapis": "^144.0.0",
+    "mongodb": "^6.10.0",
+    "mongoose": "^8.7.3",
+    "node-hill-s": "^13.3.3"
+  }
+}
