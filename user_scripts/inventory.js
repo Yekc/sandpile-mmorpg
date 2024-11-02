@@ -27,7 +27,8 @@ give = async function(player, item, quantity) {
 remove = async function(player, item, quantity) {
     try {
         if (player.data.inventory[item]) {
-            player.data.inventory[item] = Math.max(current - quantity, 0)
+            player.data.inventory[item] = current - quantity
+            if (player.data.inventory[item] <= 0) delete player.data.inventory[item]
             log("inventory.js", "remove", `Removed ${quantity} ${item} from ${player.username} (${player.userId})`)
             await save(player)
         } else {

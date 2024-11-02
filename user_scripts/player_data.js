@@ -14,6 +14,10 @@ const playerSchema = new mongoose.Schema({
     inventory: {
         type: Object,
         default: {}
+    },
+    toolbar: {
+        type: [String],
+        default: []
     }
 })
 const Player = mongoose.model("Player", playerSchema)
@@ -47,8 +51,10 @@ connect()
 
 save = async function(player) {
     try {
-        const playerData = new Player(player.data)
-        await playerData.save()
+        await Player.updateOne(
+            { userId: player.userId },
+            { $set: player.data }
+        )
         log("player_data.js", "save", `Saved player data for ${player.username} (${player.userId})`)
     } catch (error) {
         log("player_data.js", "save", `Failed to save player data for ${player.username} (${player.userId}): ${error}`, 3)
@@ -65,15 +71,22 @@ saveAll = async function() {
 
 wipe = async function(player) {
     try {
-        await Player.deleteOne({ userId: player.userId });
+        await Player.deleteOne({ userId: player.userId })
+        let playerData = new Player()
+        playerData.userId = player.userId
+        playerData.version = currentVersion
+        await playerData.save()
+        player.kick("Your data has been wiped by an admin!")
         log("player_data.js", "wipe", `Player data has been DELETED for ${player.username} (${player.userId})!!!`, 2)
     } catch (error) {
-        log("player_data.js", "wipe", `Failed to delete player data for ${player.username} (${player.userId})`, 3)
+        log("player_data.js", "wipe", `Failed to delete player data for ${player.username} (${player.userId}): ${error}`, 3)
     }
 }
 
 
 Game.on("playerJoin", async (player) => {
+    player.loadTool = false
+
     //Look for player's data in the database
     let playerData = await Player.findOne({ userId: player.userId }).catch((error) => {
         player.message("\\c6Something went wrong when retreiving your player data!")
@@ -90,7 +103,7 @@ Game.on("playerJoin", async (player) => {
         } else {
             //Player data needs to be updated
             try {
-                let f = updates["from" + String(currentVersion - 1)]
+                let f = updates[`from${currentVersion - 1}`]
                 await f(player)
                 log("player_data.js", "Game.on(\"playerJoin\")", `Updated player data for ${player.username} (${player.userId})`)
                 if (player.data.version < currentVersion) update(player)
@@ -101,15 +114,15 @@ Game.on("playerJoin", async (player) => {
         log("player_data.js", "Game.on(\"playerJoin\")", `Loaded player data for ${player.username} (${player.userId}) (v${player.data.version})`)
     } else {
         //New player
-        let playerData = new Player({
-            userId: player.userId,
-            version: currentVersion,
-            inventory: {}
-        })
+        let playerData = new Player()
+        playerData.userId = player.userId
+        playerData.version = currentVersion
         await playerData.save()
         player.data = playerData
         log("player_data.js", "Game.on(\"playerJoin\")", `Created player data for ${player.username} (${player.userId}) (v${player.data.version})`)
     }
+
+    updateToolbar(player)
 
     player.emit("Loaded")
 })

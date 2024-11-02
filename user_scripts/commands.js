@@ -23,6 +23,8 @@ log = function(file, method, content, type = 0) {
 }
 
 
+//ADMIN COMMANDS
+
 //shutdown
 Game.command("shutdown", async(player) => {
     if (player.userId > 2) return
@@ -141,4 +143,22 @@ Game.command("remove", async(player, a) => {
         await remove(player, args[0], Number(args[1]))
         player.message(`\\c5Removed ${args[1]} ${args[0]}!`)
     }
+})
+
+
+//PLAYER COMMANDS
+
+//inv [page]
+//inventory [page]
+Game.command(["inv", "inventory"], async(player, a) => {
+    let args = a.split(' ')
+
+    if (!isNaN(parseFloat(args[0])) && Number(args[0]) <= player.ui.invPageCount) {
+        player.ui.invPage = Number(args[0])
+    } else {
+        player.message("\\c6Invalid arguments! /inv [page]")
+    }
+
+    player.ui.menuOpened = true
+    player.ui.menu = 1
 })

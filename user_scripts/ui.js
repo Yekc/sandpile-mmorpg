@@ -4,7 +4,8 @@ const pageCount = 10
 //Menu type enum
 const menus = Object.freeze({
     NONE: 0,
-    INVENTORY: 1
+    INVENTORY: 1,
+    ITEM: 2
 })
 
 Game.on("playerJoin", (player) => {
@@ -19,17 +20,18 @@ Game.on("playerJoin", (player) => {
         //Inventory variables
         player.ui.invPage = 1
         player.ui.invPageCount = 1
+        player.ui.invItem = ""
 
         //UI loop
         setInterval(() => {
-            player.ui.invPageCount = Math.ceil(Object.values(player.data.inventory).length / pageCount)
+            player.ui.invPageCount = Math.max(Math.ceil(Object.values(player.data.inventory).length / pageCount), 1)
 
             let draw = ""
 
             switch (player.ui.menu) {
-                //Inventory
-                case 1:
-                    draw += "#\\c1|\\c2===\\c1| \\c9Inventory \\c1|\\c2====================\\c1|#"
+                case menus.INVENTORY:
+                    draw += "#\\c1|\\c2===\\c1| \\c9Inventory \\c1|\\c2====================\\c1|"
+                    draw += "#\\c1Press the number next to an item to view more information about it#"
 
                     let pageItems = Object.keys(player.data.inventory).slice(pageCount * (player.ui.invPage - 1), pageCount * player.ui.invPage)
                     for (let i = 0; i < pageItems.length; i++) {
@@ -39,6 +41,15 @@ Game.on("playerJoin", (player) => {
                     draw += `##\\c0Page ${player.ui.invPage == 1 ? "\\c1" : ""}< \\c0${player.ui.invPage}/${player.ui.invPageCount} ${player.ui.invPage == player.ui.invPageCount ? "\\c1" : ""}>    \\c1Use \\c7X \\c1and \\c7C \\c1to scroll through the pages`
                     draw += "#\\c1Press \\c7E \\c1to close your inventory"
                     break
+                
+                case menus.ITEM:
+                    draw += "#\\c1|\\c2===\\c1| \\c9Inventory \\c1|\\c2====================\\c1|"
+                    draw += "#\\c1Press \\c7E \\c1to go back to your inventory#"
+
+                    let item = item(player.ui.invItem)
+
+                    draw += `item.display.name`
+                    break
             }
 
             player.centerPrint(draw)
@@ -46,21 +57,46 @@ Game.on("playerJoin", (player) => {
 
         //Keyboard input
         player.keypress(async(key) => {
+            //Number key
+            if (!isNaN(parseFloat(key))) {
+                switch (player.ui.menu) {
+                    case menus.INVENTORY:
+                        player.ui.invItem = Object.keys(player.data.inventory).slice(pageCount * (player.ui.invPage - 1), pageCount * player.ui.invPage)[Number(key) - 1]
+                        player.ui.menu = menus.ITEM
+                        break
+                }
+            }
+
             switch (key) {
                 //Toggle inventory
                 case "e":
-                    player.ui.menuOpened = !player.ui.menuOpened;
-                    player.ui.menu = player.ui.menuOpened ? 1 : 0;
+                    switch (player.ui.menu) {
+                        case menus.INVENTORY:
+                        case menus.NONE:
+                            player.ui.menuOpened = !player.ui.menuOpened
+                            player.ui.menu = player.ui.menuOpened ? menus.INVENTORY : menus.NONE
+                            break
+                        case menus.ITEM:
+                            player.ui.menu = menus.INVENTORY
+                            break
+                    }
                     break
                 
                 //Page left
                 case "x":
-                    if (player.ui.invPage > 1) player.ui.invPage--
+                    if (player.ui.menu == menus.INVENTORY && player.ui.invPage > 1) player.ui.invPage--
                     break
 
                 //Page right
                 case "c":
-                    if (player.ui.invPage < player.ui.invPageCount) player.ui.invPage++
+                    if (player.ui.menu == menus.INVENTORY && player.ui.invPage < player.ui.invPageCount) player.ui.invPage++
+                    break
+                
+                //Equip item
+                case "q":
+                    if (player.ui.menu == menus.ITEM) {
+                        
+                    }
                     break
             }
         })
