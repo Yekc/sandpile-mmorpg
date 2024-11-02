@@ -31,7 +31,7 @@ Game.on("playerJoin", (player) => {
                 case 1:
                     draw += "#\\c1|\\c2===\\c1| \\c9Inventory \\c1|\\c2====================\\c1|#"
 
-                    let pageItems = Object.keys(player.data.inventory).slice(1 * player.ui.invPage - 1, pageCount * player.ui.invPage)
+                    let pageItems = Object.keys(player.data.inventory).slice(pageCount * (player.ui.invPage - 1), pageCount * player.ui.invPage)
                     for (let i = 0; i < pageItems.length; i++) {
                         draw += `#\\c1[\\c7${i + 1}\\c1] \\c0${item(pageItems[i]).display.name} \\c0(${player.data.inventory[pageItems[i]]})`
                     }
