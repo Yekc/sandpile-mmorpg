@@ -37,10 +37,10 @@ const updates = {
 
 //Connect to MongoDB
 connect = async() => {
-    console.log("[PLAYER_DATA -> CONNECT] Attempting to establish connection with MongoDB...")
+    log("player_data.js", "connect", "Attempting to establish connection with MongoDB...", 1)
     mongoose.connect("mongodb+srv://yekware:GRkpLPA7f8o0fq7p@savedata1.mhvce.mongodb.net/?retryWrites=true&w=majority&appName=savedata1")
-    .then(() => console.log("[PLAYER_DATA -> CONNECT] Connected to MongoDB!"))
-    .catch(error => console.log(`[PLAYER_DATA -> CONNECT] Failed to connect to MongoDB: ${error}`))
+    .then(() => log("player_data.js", "connect", "Connected to MongoDB!"))
+    .catch(error => log("player_data.js", "connect", `Failed to connect to MongoDB: ${error}`, 3))
 }
 connect()
 
@@ -49,26 +49,26 @@ save = async function(player) {
     try {
         const playerData = new Player(player.data)
         await playerData.save()
-        console.log(`[PLAYER_DATA -> SAVE] Saved player data for ${player.username} (${player.userId})`)
+        log("player_data.js", "save", `Saved player data for ${player.username} (${player.userId})`)
     } catch (error) {
-        console.log(`[PLAYER_DATA -> SAVE] Failed to save player data for ${player.username} (${player.userId}): ${error}`)
+        log("player_data.js", "save", `Failed to save player data for ${player.username} (${player.userId}): ${error}`, 3)
     }
 }
 
 saveAll = async function() {
-    console.log("[PLAYER_DATA -> SAVE ALL] Saving player data for every player...")
+    log("player_data.js", "saveAll", "Saving player data for every player...", 1)
     for (let i = 0; i < Game.players.length; i++) {
         await save(Game.players[i])
     }
-    console.log("[PLAYER_DATA -> SAVE ALL] Saved player data for all players")
+    log("player_data.js", "saveAll", "Saved player data for all players")
 }
 
 wipe = async function(player) {
     try {
         await Player.deleteOne({ userId: player.userId });
-        console.log(`[PLAYER_DATA -> WIPE] Player data has been DELETED for ${player.username} (${player.userId})!!!`)
+        log("player_data.js", "wipe", `Player data has been DELETED for ${player.username} (${player.userId})!!!`, 2)
     } catch (error) {
-        console.log(`[PLAYER_DATA -> WIPE] Failed to delete player data for ${player.username} (${player.userId})`)
+        log("player_data.js", "wipe", `Failed to delete player data for ${player.username} (${player.userId})`, 3)
     }
 }
 
@@ -79,6 +79,7 @@ Game.on("playerJoin", async (player) => {
         player.message("\\c6Something went wrong when retreiving your player data!")
         player.message(`\\c6${error}`)
         player.kick("Something went wrong when retreiving your player data!")
+        log("player_data.js", "Game.on(\"playerJoin\")", `Failed to retreive player data for ${player.username} (${player.userId})`, 3)
     })
 
     if (playerData) {
@@ -91,13 +92,13 @@ Game.on("playerJoin", async (player) => {
             try {
                 let f = updates["from" + String(currentVersion - 1)]
                 await f(player)
-                console.log(`[PLAYER_DATA -> JOIN] Updated player data for ${player.username} (${player.userId})`)
+                log("player_data.js", "Game.on(\"playerJoin\")", `Updated player data for ${player.username} (${player.userId})`)
                 if (player.data.version < currentVersion) update(player)
             } catch (error) {
-                console.log(`[PLAYER_DATA -> JOIN] Failed to update player data for ${player.username} (${player.userId}): ${error}`)
+                log("player_data.js", "Game.on(\"playerJoin\")", `Failed to update player data for ${player.username} (${player.userId}): ${error}`, 3)
             }
         }
-        console.log(`[PLAYER_DATA -> JOIN] Loaded player data for ${player.username} (${player.userId}) (v${player.data.version})`)
+        log("player_data.js", "Game.on(\"playerJoin\")", `Loaded player data for ${player.username} (${player.userId}) (v${player.data.version})`)
     } else {
         //New player
         let playerData = new Player({
@@ -107,8 +108,10 @@ Game.on("playerJoin", async (player) => {
         })
         await playerData.save()
         player.data = playerData
-        console.log(`[PLAYER_DATA -> JOIN] Created player data for ${player.username} (${player.userId}) (v${player.data.version})`)
+        log("player_data.js", "Game.on(\"playerJoin\")", `Created player data for ${player.username} (${player.userId}) (v${player.data.version})`)
     }
+
+    player.emit("Loaded")
 })
 
 
