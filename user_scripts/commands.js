@@ -19,7 +19,7 @@ log = function(file, method, content, type = 0) {
             color = "\x1b[31m"
             break
     }
-    console.log(`\x1b[90m[${file} -> ${method}] \x1b[1m${color}${content}\x1b[0m`)
+    console.log(`\x1b[90m[${file}\x1b[90m -> ${method}\x1b[90m] \x1b[1m${color}${content}\x1b[0m`)
 }
 
 

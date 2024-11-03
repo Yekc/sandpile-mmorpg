@@ -3,14 +3,19 @@
         "id": "ITEM1",
         "display": {
             "name": "Item1",
-            "description": "description"
+            "description": "description",
+            "model": 790
+        },
+        "actions": {
+            "onclick": ""
         }
     },
     {
         "id": "ITEM2",
         "display": {
             "name": "Item2",
-            "description": "description"
+            "description": "description",
+            "model": 790
         }
     }
 ]

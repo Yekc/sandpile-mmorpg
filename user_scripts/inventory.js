@@ -17,10 +17,10 @@ give = async function(player, item, quantity) {
     try {
         const current = player.data.inventory[item] || 0
         player.data.inventory[item] = current + quantity
-        log("inventory.js", "give", `Gave ${quantity} ${item} to ${player.username} (${player.userId})`)
+        log("\x1b[34minventory.js", "give", `Gave ${quantity} ${item} to ${player.username} (${player.userId})`)
         await save(player)
     } catch (error) {
-        log("inventory.js", "give", `Failed to give ${quantity} ${item} to ${player.username} (${player.userId}): ${error}`, 3)
+        log("\x1b[34minventory.js", "give", `Failed to give ${quantity} ${item} to ${player.username} (${player.userId}): ${error}`, 3)
     }
 }
 
@@ -29,13 +29,13 @@ remove = async function(player, item, quantity) {
         if (player.data.inventory[item]) {
             player.data.inventory[item] = current - quantity
             if (player.data.inventory[item] <= 0) delete player.data.inventory[item]
-            log("inventory.js", "remove", `Removed ${quantity} ${item} from ${player.username} (${player.userId})`)
+            log("\x1b[34minventory.js", "remove", `Removed ${quantity} ${item} from ${player.username} (${player.userId})`)
             await save(player)
         } else {
-            log("inventory.js", "remove", `Failed to remove ${quantity} ${item} because player ${player.username} (${player.userId}) does not have any!`, 2)
+            log("\x1b[34minventory.js", "remove", `Failed to remove ${quantity} ${item} because player ${player.username} (${player.userId}) does not have any!`, 2)
         }
     } catch (error) {
-        log("inventory.js", "remove", `Failed to remove ${quantity} ${item} from ${player.username} (${player.userId}): ${error}`, 3)
+        log("\x1b[34minventory.js", "remove", `Failed to remove ${quantity} ${item} from ${player.username} (${player.userId}): ${error}`, 3)
     }
 }
 
@@ -51,7 +51,7 @@ sortAlphabetical = function(player, ascending = true) {
         }, {})
 
     player.data.inventory = sortedInventory
-    log("inventory.js", "sortAlphabetical", `Inventory sorted ${ascending ? 'ascending' : 'descending'} for ${player.username} (${player.userId})`)
+    log("\x1b[34minventory.js", "sortAlphabetical", `Inventory sorted ${ascending ? 'ascending' : 'descending'} for ${player.username} (${player.userId})`)
 }
 
 sortQuantity = function(player, ascending = true) {
@@ -66,5 +66,5 @@ sortQuantity = function(player, ascending = true) {
         }, {})
 
     player.data.inventory = sortedInventory
-    log("inventory.js", "sortQuantity", `Inventory sorted ${ascending ? 'ascending' : 'descending'} for ${player.username} (${player.userId})`)
+    log("\x1b[34minventory.js", "sortQuantity", `Inventory sorted ${ascending ? 'ascending' : 'descending'} for ${player.username} (${player.userId})`)
 }

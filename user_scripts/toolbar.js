@@ -27,8 +27,8 @@ updateToolbar = function(player) {
             player.addTool(t)
         })
 
-        log("inventory.js", "updateToolbar", `Updated toolbar for ${player.username} (${player.userId}): ${player.data.toolbar}`)
+        log("\x1b[35mtoolbar.js", "updateToolbar", `Updated toolbar for ${player.username} (${player.userId}): ${player.data.toolbar}`)
     } catch (error) {
-        log("inventory.js", "updateToolbar", `Failed to update toolbar for ${player.username} (${player.userId}): ${error}`, 3)
+        log("\x1b[35mtoolbar.js", "updateToolbar", `Failed to update toolbar for ${player.username} (${player.userId}): ${error}`, 3)
     }
 }
