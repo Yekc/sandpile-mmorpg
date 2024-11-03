@@ -2,20 +2,66 @@
     {
         "id": "ITEM1",
         "display": {
-            "name": "Item1",
+            "name": "Item 1",
             "description": "description",
             "model": 790
         },
         "actions": {
-            "onclick": ""
+            "activate": "test",
+            "equip": "equip",
+            "unequip": "unequip"
         }
     },
     {
         "id": "ITEM2",
         "display": {
-            "name": "Item2",
+            "name": "Item 2",
             "description": "description",
             "model": 790
+        },
+        "actions": {
+            "activate": "",
+            "equip": "",
+            "unequip": ""
+        }
+    },
+    {
+        "id": "ITEM3",
+        "display": {
+            "name": "Item 3",
+            "description": "description",
+            "model": 790
+        },
+        "actions": {
+            "activate": "",
+            "equip": "",
+            "unequip": ""
+        }
+    },
+    {
+        "id": "ITEM4",
+        "display": {
+            "name": "Item 4",
+            "description": "description",
+            "model": 790
+        },
+        "actions": {
+            "activate": "",
+            "equip": "",
+            "unequip": ""
+        }
+    },
+    {
+        "id": "ITEM5",
+        "display": {
+            "name": "Item 5",
+            "description": "description",
+            "model": 790
+        },
+        "actions": {
+            "activate": "",
+            "equip": "",
+            "unequip": ""
         }
     }
 ]

@@ -75,10 +75,18 @@ Game.on("playerJoin", (player) => {
                         break
                     case menus.ITEM:
                         let slot = player.data.toolbar.indexOf(player.ui.invItem)
-                        if (slot != -1) {
-                            player.data.toolbar = player.data.toolbar.splice(slot, slot)
+                        if (Number(key) - 1 == slot || (Number(key) - 1 > player.data.toolbar.length && slot != -1)) {
+                            //Remove from the toolbar
+                            player.data.toolbar = player.data.toolbar.filter(id => id !== player.ui.invItem)
                         } else {
-                            player.data.toolbar[Number(key) - 1 > player.data.toolbar.length ? player.data.toolbar.length : Number(key) - 1] = player.ui.invItem
+                            if (slot != -1) {
+                                //Move to another slot in the toolbar
+                                player.data.toolbar = player.data.toolbar.filter(id => id !== player.ui.invItem)
+                                player.data.toolbar[(Number(key) - 1 > player.data.toolbar.length ? player.data.toolbar.length : Number(key) - 1) - (Number(key) > slot + 1 ? 1 : 0)] = player.ui.invItem
+                            } else {
+                                //Add to toolbar
+                                player.data.toolbar[Number(key) - 1 > player.data.toolbar.length ? player.data.toolbar.length : Number(key) - 1] = player.ui.invItem
+                            }
                         }
                         updateToolbar(player)
                         break
