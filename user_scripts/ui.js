@@ -82,7 +82,7 @@ Game.on("playerJoin", (player) => {
                             if (slot != -1) {
                                 //Move to another slot in the toolbar
                                 player.data.toolbar = player.data.toolbar.filter(id => id !== player.ui.invItem)
-                                player.data.toolbar[(Number(key) - 1 > player.data.toolbar.length ? player.data.toolbar.length : Number(key) - 1) - (Number(key) > slot + 1 ? 1 : 0)] = player.ui.invItem
+                                player.data.toolbar[Number(key) - 1 > player.data.toolbar.length ? player.data.toolbar.length : Number(key) - (Number(key) > slot + 1 ? 2 : 1)] = player.ui.invItem
                             } else {
                                 //Add to toolbar
                                 player.data.toolbar[Number(key) - 1 > player.data.toolbar.length ? player.data.toolbar.length : Number(key) - 1] = player.ui.invItem
