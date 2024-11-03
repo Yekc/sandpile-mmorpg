@@ -1,13 +1,3 @@
-setToolbarSlot = function(player, slot, item) {
-    if (!player.data.toolbar[slot] == item) {
-        player.data.toolbar[slot] = item
-        log("inventory.js", "setToolbarSlot", `Set toolbar slot ${slot} to ${item} for ${player.username} (${player.userId})`)
-        updateToolbar(player)
-    } else {
-        log("inventory.js", "setToolbarSlot", `Failed to set toolbar slot ${slot} to ${item} for ${player.username} (${player.userId}): Slot already occupied by ${item}`, 2)
-    }
-}
-
 updateToolbar = function(player) {
     try {
         //Destroy all current tools
@@ -17,7 +7,7 @@ updateToolbar = function(player) {
 
         //Add tools
         player.data.toolbar.forEach(tool => {
-            let item = item(tool)
+            let item = getItem(tool)
 
             //Set tool display name
             let toolName = ""
@@ -37,7 +27,7 @@ updateToolbar = function(player) {
             player.addTool(t)
         })
 
-        log("inventory.js", "updateToolbar", `Updated toolbar for ${player.username} (${player.userId})`)
+        log("inventory.js", "updateToolbar", `Updated toolbar for ${player.username} (${player.userId}): ${player.data.toolbar}`)
     } catch (error) {
         log("inventory.js", "updateToolbar", `Failed to update toolbar for ${player.username} (${player.userId}): ${error}`, 3)
     }

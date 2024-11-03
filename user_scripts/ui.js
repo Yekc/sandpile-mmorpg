@@ -35,7 +35,7 @@ Game.on("playerJoin", (player) => {
 
                     let pageItems = Object.keys(player.data.inventory).slice(pageCount * (player.ui.invPage - 1), pageCount * player.ui.invPage)
                     for (let i = 0; i < pageItems.length; i++) {
-                        draw += `#\\c1[\\c7${i + 1}\\c1] \\c0${item(pageItems[i]).display.name} \\c0(${player.data.inventory[pageItems[i]]})`
+                        draw += `#\\c1[\\c7${i + 1}\\c1] \\c0${getItem(pageItems[i]).display.name} \\c0(${player.data.inventory[pageItems[i]]})`
                     }
 
                     draw += `##\\c0Page ${player.ui.invPage == 1 ? "\\c1" : ""}< \\c0${player.ui.invPage}/${player.ui.invPageCount} ${player.ui.invPage == player.ui.invPageCount ? "\\c1" : ""}>    \\c1Use \\c7X \\c1and \\c7C \\c1to scroll through the pages`
@@ -46,9 +46,18 @@ Game.on("playerJoin", (player) => {
                     draw += "#\\c1|\\c2===\\c1| \\c9Inventory \\c1|\\c2====================\\c1|"
                     draw += "#\\c1Press \\c7E \\c1to go back to your inventory#"
 
-                    let item = item(player.ui.invItem)
+                    let item = getItem(player.ui.invItem)
 
-                    draw += `item.display.name`
+                    draw += `#\\c0${item.display.name}#\\c1Amount: \\c0${player.data.inventory[player.ui.invItem]}#`
+                    draw += `#\\c1${item.display.description}#`
+
+                    let slot = player.data.toolbar.indexOf(player.ui.invItem)
+                    if (slot != -1) {
+                        draw += `#\\c5You currently have this item equipped in your toolbar! (Slot ${slot + 1})`
+                    }
+
+                    draw += `#\\c1[\\c71-9\\c1] \\c0${slot == -1 ? "Equip item in" : "Remove item from"} toolbar`
+                    draw += "#\\c1[\\c7E\\c1] \\c0Go back to inventory"
                     break
             }
 
@@ -63,6 +72,15 @@ Game.on("playerJoin", (player) => {
                     case menus.INVENTORY:
                         player.ui.invItem = Object.keys(player.data.inventory).slice(pageCount * (player.ui.invPage - 1), pageCount * player.ui.invPage)[Number(key) - 1]
                         player.ui.menu = menus.ITEM
+                        break
+                    case menus.ITEM:
+                        let slot = player.data.toolbar.indexOf(player.ui.invItem)
+                        if (slot != -1) {
+                            player.data.toolbar = player.data.toolbar.splice(slot, slot)
+                        } else {
+                            player.data.toolbar[Number(key) - 1 > player.data.toolbar.length ? player.data.toolbar.length : Number(key) - 1] = player.ui.invItem
+                        }
+                        updateToolbar(player)
                         break
                 }
             }
@@ -90,13 +108,6 @@ Game.on("playerJoin", (player) => {
                 //Page right
                 case "c":
                     if (player.ui.menu == menus.INVENTORY && player.ui.invPage < player.ui.invPageCount) player.ui.invPage++
-                    break
-                
-                //Equip item
-                case "q":
-                    if (player.ui.menu == menus.ITEM) {
-                        
-                    }
                     break
             }
         })

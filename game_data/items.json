@@ -2,13 +2,15 @@
     {
         "id": "ITEM1",
         "display": {
-            "name": "Item1"
+            "name": "Item1",
+            "description": "description"
         }
     },
     {
         "id": "ITEM2",
         "display": {
-            "name": "Item2"
+            "name": "Item2",
+            "description": "description"
         }
     }
 ]

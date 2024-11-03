@@ -1,16 +1,16 @@
 let items = require("../game_data/items.json")
 
-item = function(id) {
-    let i = items.find(i => i.id === id)
+getItem = function(id) {
+    let item = items.find(i => i.id === id)
 
-    if (!i) i = {
+    if (!item) item = {
         id: "NULL",
         display: {
             name: "null"
         }
     }
 
-    return i
+    return item
 }
 
 give = async function(player, item, quantity) {
