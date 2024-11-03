@@ -39,7 +39,7 @@ Game.on("playerJoin", (player) => {
                     }
 
                     draw += `##\\c0Page ${player.ui.invPage == 1 ? "\\c1" : ""}< \\c0${player.ui.invPage}/${player.ui.invPageCount} ${player.ui.invPage == player.ui.invPageCount ? "\\c1" : ""}>    \\c1Use \\c7X \\c1and \\c7C \\c1to scroll through the pages`
-                    draw += "#\\c1Press \\c7E \\c1to close your inventory"
+                    draw += "#\\c1[\\c7E\\c1] \\c0Close"
                     break
                 
                 case menus.ITEM:
@@ -78,14 +78,17 @@ Game.on("playerJoin", (player) => {
                         if (Number(key) - 1 == slot || (Number(key) - 1 > player.data.toolbar.length && slot != -1)) {
                             //Remove from the toolbar
                             player.data.toolbar = player.data.toolbar.filter(id => id !== player.ui.invItem)
+                            player.topPrint(`\\c5You unequipped ${getItem(player.ui.invItem).display.name}!`, 2)
                         } else {
                             if (slot != -1) {
                                 //Move to another slot in the toolbar
                                 player.data.toolbar = player.data.toolbar.filter(id => id !== player.ui.invItem)
                                 player.data.toolbar[Number(key) - 1 > player.data.toolbar.length ? player.data.toolbar.length : Number(key) - (Number(key) > slot + 1 ? 2 : 1)] = player.ui.invItem
+                                player.topPrint(`\\c5You replaced the item in slot ${Number(key)} with ${getItem(player.ui.invItem).display.name}!`, 2)
                             } else {
                                 //Add to toolbar
                                 player.data.toolbar[Number(key) - 1 > player.data.toolbar.length ? player.data.toolbar.length : Number(key) - 1] = player.ui.invItem
+                                player.topPrint(`\\c5You equipped ${getItem(player.ui.invItem).display.name}!`, 2)
                             }
                         }
                         updateToolbar(player)
