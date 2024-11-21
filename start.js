@@ -1,10 +1,10 @@
 const nh = require("node-hill-s")
 
 nh.startServer({
-    hostKey: "KWtPXIc8mwYHnddL9JjcI5mKp36vkzqNcCaeVqka2gxBRG9HKl84bjF1lfJ8hcSa",
-    gameId: 69,
+    hostKey: "ZbqFHImC73riat2FphDPwKp0CwJlbyepiQoKY8G3S64fSiZT6idG5S6TTyQTDJJC",
+    gameId: 9,
     port: 42480,
-    local: true,
+    local: false,
     mapDirectory: "./maps/",
     map: "test.brk",
     scripts: "./user_scripts",

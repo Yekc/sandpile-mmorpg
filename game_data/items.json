@@ -1,6 +1,6 @@
 [
     {
-        "id": "ITEM1",
+        "id": "ITEM_1",
         "display": {
             "name": "Item 1",
             "description": "description",
@@ -13,7 +13,7 @@
         }
     },
     {
-        "id": "ITEM2",
+        "id": "ITEM_2",
         "display": {
             "name": "Item 2",
             "description": "description",
@@ -26,7 +26,7 @@
         }
     },
     {
-        "id": "ITEM3",
+        "id": "ITEM_3",
         "display": {
             "name": "Item 3",
             "description": "description",
@@ -39,7 +39,7 @@
         }
     },
     {
-        "id": "ITEM4",
+        "id": "ITEM_4",
         "display": {
             "name": "Item 4",
             "description": "description",
@@ -52,7 +52,7 @@
         }
     },
     {
-        "id": "ITEM5",
+        "id": "ITEM_5",
         "display": {
             "name": "Item 5",
             "description": "description",

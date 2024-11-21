@@ -1,0 +1,27 @@
+[
+    {
+        "id": "TEST_OUTFIT",
+        "body": {
+            "head": "#ddb59d",
+            "torso": "#7a5d4d",
+            "leftArm": "#ddb59d",
+            "rightArm": "#ddb59d",
+            "leftLeg": "#614231",
+            "rightLeg": "#614231"
+        },
+        "clothing": {
+            "clothing1": 0,
+            "clothing2": 0,
+            "clothing3": 0,
+            "clothing4": 0,
+            "clothing5": 0
+        },
+        "items": {
+            "face": 0,
+            "hat1": 0,
+            "hat2": 0,
+            "hat3": 0,
+            "tool": 0
+        }
+    }
+]

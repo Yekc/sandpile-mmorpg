@@ -1,4 +1,4 @@
-let items = require("../game_data/items.json")
+var items = require("../game_data/items.json")
 
 getItem = function(id) {
     let item = items.find(i => i.id === id)

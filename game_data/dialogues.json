@@ -1,0 +1,24 @@
+[
+    {
+        "id": "TEST_DIALOGUE",
+        "root": "START",
+        "nodes": [
+            {
+                "id": "START",
+                "type": "",
+                "once": false,
+                "content": "Hello world!",
+                "choices": [
+                    [
+                        "Hello",
+                        "HELLO"
+                    ],
+                    [
+                        "Shut up",
+                        "EXIT"
+                    ]
+                ]
+            }
+        ]
+    }
+]

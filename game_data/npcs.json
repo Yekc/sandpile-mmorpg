@@ -1,0 +1,12 @@
+[
+    {
+        "id": "TEST_NPC",
+        "dialogue": "TEST_DIALOGUE",
+        "display": {
+            "name": "Mr. Test",
+            "outfit": "TEST_OUTFIT",
+            "scale": 1.0,
+            "speech": ""
+        }
+    }
+]

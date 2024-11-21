@@ -42,7 +42,7 @@ const updates = {
 //Connect to MongoDB
 connect = async() => {
     log("\x1b[36mplayer_data.js", "connect", "Attempting to establish connection with MongoDB...", 1)
-    mongoose.connect("mongodb+srv://yekware:GRkpLPA7f8o0fq7p@savedata1.mhvce.mongodb.net/?retryWrites=true&w=majority&appName=savedata1")
+    mongoose.connect("mongodb+srv://gwojtysiak34:lYpMj3OKO6WXRbXj@savedata2.y8xyv.mongodb.net/?retryWrites=true&w=majority&appName=savedata2")
     .then(() => log("\x1b[36mplayer_data.js", "connect", "Connected to MongoDB!"))
     .catch(error => log("\x1b[36mplayer_data.js", "connect", `Failed to connect to MongoDB: ${error}`, 3))
 }
